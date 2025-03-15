@@ -14,10 +14,14 @@ namespace Generator_Faktur
             while (true)
             {
                 // Menu ktere se zobrazi po zapnuti programu v konzoli kde nabidne moznosti co lze udelat.
+                Console.WriteLine("==============================================");
+                Console.WriteLine("MENU GENERATORU FAKTUR POMOCI XML");
+                Console.WriteLine("==============================================");
                 Console.WriteLine("Vyberte akci:");
                 Console.WriteLine("1 - Vytvořit fakturu");
                 Console.WriteLine("2 - Otevřít existující fakturu");
                 Console.WriteLine("3 - Ukončit");
+                Console.WriteLine("==============================================");
                 Console.Write("Zadejte volbu: ");
                 // Kontrola co uzivatel napise (1,2,3).
                 string choice = Console.ReadLine();
@@ -25,6 +29,7 @@ namespace Generator_Faktur
                 // Jestli uzivatel vybere variantu 1, tak se zapne script kde uzivatel bude vytvaret fakturu.
                 if (choice == "1")
                 {
+                    Console.WriteLine("==============================================");
                     // Uzivatel muze zadat cestu do slozky kam se bude ukladat soubor.
                     Console.Write("Zadejte cestu pro uložení faktury (např. C:\\Faktury\\invoice.isdoc): ");
                     // Prijma cestu
@@ -33,6 +38,7 @@ namespace Generator_Faktur
                     // Pote uzivatel zacne vkladat hodnoty podle toho co znamenaji.
                     while (true)
                     {
+                        Console.WriteLine("==============================================");
                         // ID faktury. 
                         string id = GetInput("Zadejte ID faktury: ");
                         // Datum, je treba aby byla ve formatu dd-mm-yyyy.
@@ -55,12 +61,14 @@ namespace Generator_Faktur
                         decimal total = quantity * price;
 
                         //Zde program po vlozeni vsech dat vypise data ktere uzivatel zada pro kontrolu.
+                        Console.WriteLine("==============================================");
                         Console.WriteLine("\nZadané údaje faktury:");
                         Console.WriteLine($"ID: {id}");
                         Console.WriteLine($"Datum: {date}");
                         Console.WriteLine($"Dodavatel: {supplierName}, IČO: {supplierICO}");
                         Console.WriteLine($"Zákazník: {customerName}, IČO: {customerICO}");
                         Console.WriteLine($"Položka: {itemDescription}, Množství: {quantity}, Cena: {price}, Celkem: {total}");
+                        Console.WriteLine("==============================================");
 
                         // Program se pta zda jsou data spravna a uzivatel musi odpovedet bud ANO/NE.
                         Console.Write("Jsou tyto údaje správné? (ano/ne): ");
@@ -102,9 +110,11 @@ namespace Generator_Faktur
                 else if (choice == "2")
                 {
                     // Nabidne moznost vlozit vlastni cestu k souboru nebo otevrit lokalni/vlastne vytvorenou aplikaci.
+                    Console.WriteLine("==============================================");
                     Console.WriteLine("Vyberte možnost:");
                     Console.WriteLine("1 - Otevřít fakturu z lokální složky");
                     Console.WriteLine("2 - Otevřít fakturu z vlastní cesty");
+                    Console.WriteLine("==============================================");
                     Console.Write("Zadejte volbu: ");
                     // Prijma hodnotu.
                     string openChoice = Console.ReadLine();
@@ -126,6 +136,7 @@ namespace Generator_Faktur
                         if (files.Length > 0)
                         {
                             //Vypise dostupne faktury.
+                            Console.WriteLine("==============================================");
                             Console.WriteLine("Dostupné faktury:");
                             // Program projde vsechny nalezene soubory a vypise jejich nazvy.
                             // Kazdy soubor je ocislovan od 1 do files.Lenght.
@@ -149,18 +160,21 @@ namespace Generator_Faktur
                             // Jestli uzivatel zada spatnou hodnotu/ID slozky tak vypise chybu.
                             else
                             {
+                                Console.WriteLine("==============================================");
                                 Console.WriteLine("Neplatná volba.");
                             }
                         }
                         // Jestli slozka bude existovat ale nebudou tam zadne soubory tak vypise chybu.
                         else
                         {
+                            Console.WriteLine("==============================================");
                             Console.WriteLine("V zadané složce nejsou žádné faktury.");
                         }
                     }
                     // Jestli zadna cesta/slozka neexisutje tak vypise chybu.
                     else
                     {
+                        Console.WriteLine("==============================================");
                         Console.WriteLine("Zadaná složka neexistuje.");
                     }
                 }
@@ -172,6 +186,7 @@ namespace Generator_Faktur
                 // Jestli uzivatel zada cokoliv krome 1,2,3 tak vypise chybu.
                 else
                 {
+                    Console.WriteLine("==============================================");
                     Console.WriteLine("Neplatná volba, zkuste to znovu.");
                 }
             }
@@ -265,6 +280,7 @@ namespace Generator_Faktur
                 // Kontrola zda nahodou uz existuje soubor s stejnym nazvem.
                 if (File.Exists(filePath))
                 {
+                    Console.WriteLine("==============================================");
                     // Napise ze faktura s takovym ID uz existuje.
                     Console.WriteLine($"Faktura s ID '{id}' již existuje.");
                     // Zepta jestli nechce prejmenovat soubor.
@@ -274,12 +290,14 @@ namespace Generator_Faktur
                     // Jestli odpovi ANO, tak poprosi zadat novy nazev/ID.
                     if (changeIdChoice == "ano")
                     {
+                        Console.WriteLine("==============================================");
                         id = GetInput("Zadejte nové ID faktury: ");
                         filePath = Path.Combine(directoryPath, $"{id}.isdoc");
                     }
                     else
                     {
                         //Vypise chybu ze nelze ulozit.
+                        Console.WriteLine("==============================================");
                         Console.WriteLine("Chyba: Nelze uložit fakturu se stejným ID.");
                         return false;
                     }
@@ -312,18 +330,21 @@ namespace Generator_Faktur
                 // Ulozeni souboru.
                 doc.Save(filePath);
                 // Po uspesnem ulozeni souboru vypise celou cestu kde se soubor nachazi.
+                Console.WriteLine("==============================================");
                 Console.WriteLine($"Faktura byla úspěšně uložena do: {filePath}");
                 return true;
             }
              // Jestli system/pocitac zabrani vytvareni souboru ve vlastni ceste tak vypise chybu.
             catch (UnauthorizedAccessException)
             {
+                Console.WriteLine("==============================================");
                 Console.WriteLine("Chyba: Nemáte oprávnění k zápisu do zadané cesty.");
                 return false;
             }
             catch (Exception ex)
             {
                 // Osetreni obecne vyjimky.
+                Console.WriteLine("==============================================");
                 Console.WriteLine($"Došlo k chybě: {ex.Message}");
                 return false;
             }
@@ -337,6 +358,7 @@ namespace Generator_Faktur
             {
                 // Nacteni XML souboru
                 XDocument doc = XDocument.Load(filePath);
+                Console.WriteLine("==============================================");
                 Console.WriteLine("Obsah faktury:");
                 // Vypis veskerou fakturu dle XDocument
                 Console.WriteLine(doc);
@@ -344,6 +366,7 @@ namespace Generator_Faktur
             else
             {
                 // Jestli neni vypise chybu.
+                Console.WriteLine("==============================================");
                 Console.WriteLine("Faktura nebyla nalezena.");
             }
         }
