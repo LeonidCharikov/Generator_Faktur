@@ -1,4 +1,5 @@
 # Program pro vytvoreni/generovani XML souboru.
+Program uvnitr obsahuje komentare pro veskerou informaci.
 
 ### Existuje menu ze 3 variant:
 ```
