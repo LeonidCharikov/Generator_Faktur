@@ -9,7 +9,7 @@ Console.WriteLine("2 - Otevřít existující fakturu");
 Console.WriteLine("3 - Ukončit");
 ```
 
-### Pri vytvareni, uzivatel bude vkladat data:\
+### Pri vytvareni, uzivatel bude vkladat data:
 ```
 Console.WriteLine($"ID: {id}");
 Console.WriteLine($"Datum: {date}");
@@ -22,7 +22,7 @@ Uzivatel muze ulozit podle vlastni cesty nebo lokalne v slozce kde se nachazi pr
 
 
 
-### Pro druhou variantu uzivatel muze nacist soubor:\
+### Pro druhou variantu uzivatel muze nacist soubor:
 ```
  Console.WriteLine("Vyberte možnost:");
  Console.WriteLine("1 - Otevřít fakturu z lokální složky");
