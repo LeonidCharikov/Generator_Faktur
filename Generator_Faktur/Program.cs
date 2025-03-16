@@ -29,12 +29,6 @@ namespace Generator_Faktur
                 // Jestli uzivatel vybere variantu 1, tak se zapne script kde uzivatel bude vytvaret fakturu.
                 if (choice == "1")
                 {
-                    Console.WriteLine("==============================================");
-                    // Uzivatel muze zadat cestu do slozky kam se bude ukladat soubor.
-                    Console.Write("Zadejte cestu pro uložení faktury (např. C:\\Faktury\\invoice.isdoc): ");
-                    // Prijma cestu
-                    string filePath = Console.ReadLine();
-
                     // Pote uzivatel zacne vkladat hodnoty podle toho co znamenaji.
                     while (true)
                     {
@@ -74,6 +68,12 @@ namespace Generator_Faktur
                         Console.Write("Jsou tyto údaje správné? (ano/ne): ");
                         // Prijma odpoved Uzivatele. Trim smaze mezery a ToLower prevede znaky na mala pismena.
                         string confirmation = Console.ReadLine().Trim().ToLower();
+
+                        Console.WriteLine("==============================================");
+                        // Uzivatel muze zadat cestu do slozky kam se bude ukladat soubor.
+                        Console.Write("Zadejte cestu pro uložení faktury (např. C:\\Faktury\\invoice.isdoc): ");
+                        // Prijma cestu
+                        string filePath = Console.ReadLine();
 
                         // Jestli uzivatel odpovi ANO tak se zapne tenhle skript.
                         if (confirmation == "ano")
