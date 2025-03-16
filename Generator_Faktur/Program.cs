@@ -298,7 +298,7 @@ namespace Generator_Faktur
                     {
                         //Vypise chybu ze nelze ulozit.
                         Console.WriteLine("==============================================");
-                        Console.WriteLine("Chyba: Nelze uložit fakturu se stejným ID.");
+                        Console.WriteLine("!CHYBA!: Nelze uložit fakturu se stejným ID.");
                         return false;
                     }
                 }
@@ -338,14 +338,14 @@ namespace Generator_Faktur
             catch (UnauthorizedAccessException)
             {
                 Console.WriteLine("==============================================");
-                Console.WriteLine("Chyba: Nemáte oprávnění k zápisu do zadané cesty.");
+                Console.WriteLine("!CHYBA!: Nemáte oprávnění k zápisu do zadané cesty.");
                 return false;
             }
             catch (Exception ex)
             {
                 // Osetreni obecne vyjimky.
                 Console.WriteLine("==============================================");
-                Console.WriteLine($"Došlo k chybě: {ex.Message}");
+                Console.WriteLine($"Došlo k !CHYBĚ!: {ex.Message}");
                 return false;
             }
         }
