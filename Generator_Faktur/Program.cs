@@ -168,6 +168,7 @@ namespace Generator_Faktur
                 if (files.Length > 0)
                 {
                     Console.WriteLine("==============================================");
+                    Console.WriteLine(Directory.GetCurrentDirectory());
                     Console.WriteLine("Dostupné faktury:");
                     // Program projde vsechny nalezene soubory a vypise jejich nazvy.
                     // Kazdy soubor je ocislovan od 1 do files.Lenght.
