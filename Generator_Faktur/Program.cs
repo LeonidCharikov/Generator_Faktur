@@ -87,50 +87,87 @@ namespace Generator_Faktur
                         Console.Write("Zadejte cestu k složce pro uložení faktury (např. C:\\Faktury): ");
                         string folderPath = Console.ReadLine();
 
-                        // Kontrola, zda cesta konci znakem \ (cesta k slozce).
+                        // Kontrola, zda cesta končí znakem \ 
                         if (!folderPath.EndsWith("\\"))
                         {
-                            folderPath += "\\"; // Pridame znak \ na konec, aby se jednalo o cestu k slozce.
+                            folderPath += "\\"; // Přidáme znak \ na konec, aby se jednalo o cestu k složce
                         }
 
-                        // Kontrola, zda slozka existuje.
+                        // Kontrola, zda složka existuje
                         if (Directory.Exists(folderPath))
                         {
-                            Console.WriteLine("==============================================");
-                            Console.WriteLine("Složka existuje. Můžete pokračovat.");
-                            break; 
+                            // Vytvoření cesty k souboru
+                            string filePath = Path.Combine(folderPath, $"{id}.isdoc");
+
+                            // Pokus o uložení souboru
+                            if (CreateInvoice(filePath, id, date, supplierName, supplierICO, customerName, customerICO, itemDescription, quantity, price, total))
+                            {
+                                break; // Úspěšně uloženo, ukončíme smyčku
+                            }
+                            else
+                            {
+                                // Pokud se uložení nepovede, nabídneme možnosti
+                                Console.WriteLine("==============================================");
+                                Console.WriteLine("Nepodařilo se uložit soubor do zadané složky.");
+                                Console.Write("Chcete zadat novou cestu nebo uložit lokálně? (new/lok): ");
+                                string saveChoice = Console.ReadLine().Trim().ToLower();
+
+                                if (saveChoice == "lok")
+                                {
+                                    // Uložení do lokální složky "Faktury"
+                                    string localPath = Path.Combine(Directory.GetCurrentDirectory(), "Faktury");
+
+                                    // Vytvoření složky, pokud neexistuje
+                                    if (!Directory.Exists(localPath))
+                                    {
+                                        Directory.CreateDirectory(localPath);
+                                    }
+
+                                    // Vytvoření cesty k souboru
+                                    string localFilePath = Path.Combine(localPath, $"{id}.isdoc");
+
+                                    // Uložení souboru
+                                    if (CreateInvoice(localFilePath, id, date, supplierName, supplierICO, customerName, customerICO, itemDescription, quantity, price, total))
+                                    {
+                                        break; // Úspěšně uloženo, ukončíme smyčku
+                                    }
+                                }
+                                // Pokud uživatel zvolí "novou", smyčka se opakuje a uživatel zadá novou cestu
+                            }
                         }
                         else
                         {
-                            // Pokud slozka neexistuje da vyber.
+                            // Pokud složka neexistuje, dáme uživateli na výběr
                             Console.WriteLine("==============================================");
                             Console.WriteLine("Zadaná složka neexistuje.");
-                            Console.Write("Chcete zadat novou cestu nebo uložit lokálně? (new/lok): ");
+                            Console.Write("Chcete zadat novou cestu nebo uložit lokálně? (novou/lok): ");
                             string saveChoice = Console.ReadLine().Trim().ToLower();
 
                             if (saveChoice == "lok")
                             {
-                                // Ulozeni do lokalni slozky "Faktury".
+                                // Uložení do lokální složky "Faktury"
                                 string localPath = Path.Combine(Directory.GetCurrentDirectory(), "Faktury");
 
-                                // Vytvoreni slozky, pokud neexistuje.
+                                // Vytvoření složky, pokud neexistuje
                                 if (!Directory.Exists(localPath))
                                 {
                                     Directory.CreateDirectory(localPath);
                                 }
 
-                                // Vytvoreni cesty k souboru.
-                                string filePath = Path.Combine(localPath, $"{id}.isdoc");
+                                // Vytvoření cesty k souboru
+                                string localFilePath = Path.Combine(localPath, $"{id}.isdoc");
 
-                                // Ulozeni souboru.
-                                if (CreateInvoice(filePath, id, date, supplierName, supplierICO, customerName, customerICO, itemDescription, quantity, price, total))
+                                // Uložení souboru
+                                if (CreateInvoice(localFilePath, id, date, supplierName, supplierICO, customerName, customerICO, itemDescription, quantity, price, total))
                                 {
-                                    break; 
+                                    break; // Úspěšně uloženo, ukončíme smyčku
                                 }
                             }
-                            // Pokud uzivatel vybere new, cyklus se bude opakovat.
+                            // Pokud uživatel zvolí "novou", smyčka se opakuje a uživatel zadá novou cestu
                         }
-                    }   
+                    }
+
+                    // Po úspěšném uložení faktury ukončíme vnější smyčku a vrátíme se do hlavního menu
                     break;
                 }
                 else
