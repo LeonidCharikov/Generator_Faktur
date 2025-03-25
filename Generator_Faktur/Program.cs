@@ -3,6 +3,7 @@ using System.IO;
 using System.Xml.Linq;
 using System.Text.RegularExpressions;
 using System.Text;
+using System.Globalization;
 
 namespace Generator_Faktur
 {
@@ -141,7 +142,7 @@ namespace Generator_Faktur
                             // Pokud složka neexistuje, dáme uživateli na výběr
                             Console.WriteLine("==============================================");
                             Console.WriteLine("Zadaná složka neexistuje.");
-                            Console.Write("Chcete zadat novou cestu nebo uložit lokálně? (novou/lok): ");
+                            Console.Write("Chcete zadat novou cestu nebo uložit lokálně? (new/lok): ");
                             string saveChoice = Console.ReadLine().Trim().ToLower();
 
                             if (saveChoice == "lok")
@@ -261,12 +262,30 @@ namespace Generator_Faktur
         static string GetValidatedDate(string prompt)
         {
             string input;
+            DateTime date;
+            bool isValid;
+
             do
             {
                 Console.Write(prompt);
                 input = Console.ReadLine().Trim();
-            } while (!Regex.IsMatch(input, "^\\d{2}-\\d{2}-\\d{4}$"));
-            return input;
+
+                // Zkontroluj formát a platnost data
+                isValid = DateTime.TryParseExact(
+                    input,
+                    "dd-MM-yyyy",
+                    CultureInfo.InvariantCulture,
+                    DateTimeStyles.None,
+                    out date
+                );
+
+                if (!isValid)
+                {
+                    Console.WriteLine("Neplatný formát nebo datum. Zadejte ve formátu dd-MM-yyyy (např. 31-12-2023).");
+                }
+            } while (!isValid);
+
+            return input; // nebo vrátit `date` jako DateTime, pokud potřebuješ
         }
 
         // Kontrola zda Jmena dodavatele a zakaznika zacinaji velkym pismenem.
@@ -451,6 +470,7 @@ namespace Generator_Faktur
                 return false;
             }
         }
+
 
         // Nacteni souboru.
         static void ReadInvoice(string filePath)
