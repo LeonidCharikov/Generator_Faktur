@@ -258,7 +258,7 @@ namespace Generator_Faktur
             return input;
         }
 
-        // Kontrola datumu pomoci Regexu kde den a mesic obsahuji prave 2 cisla a rok 4.
+        // Kontrola datumu pomoci metody DateTime.TryParseExact
         static string GetValidatedDate(string prompt)
         {
             string input;
@@ -270,7 +270,7 @@ namespace Generator_Faktur
                 Console.Write(prompt);
                 input = Console.ReadLine().Trim();
 
-                // Zkontroluj formát a platnost data
+                // Zkontroluje formát a platnost data
                 isValid = DateTime.TryParseExact(
                     input,
                     "dd-MM-yyyy",
@@ -285,7 +285,7 @@ namespace Generator_Faktur
                 }
             } while (!isValid);
 
-            return input; // nebo vrátit `date` jako DateTime, pokud potřebuješ
+            return input; 
         }
 
         // Kontrola zda Jmena dodavatele a zakaznika zacinaji velkym pismenem.
